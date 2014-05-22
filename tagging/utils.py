@@ -165,7 +165,7 @@ def get_tag_list(tags):
     elif isinstance(tags, QuerySet) and tags.model is Tag:
         return tags
     elif isinstance(tags, types.StringTypes):
-        return Tag.objects.filter(name__in=parse_tag_input(tags))
+        return Tag.objects.filter(name__iexact=parse_tag_input(tags))
     elif isinstance(tags, (types.ListType, types.TupleType)):
         if len(tags) == 0:
             return tags
@@ -179,7 +179,7 @@ def get_tag_list(tags):
                 contents.add('int')
         if len(contents) == 1:
             if 'string' in contents:
-                return Tag.objects.filter(name__in=[force_unicode(tag) \
+                return Tag.objects.filter(name__ixact=[force_unicode(tag) \
                                                     for tag in tags])
             elif 'tag' in contents:
                 return tags
